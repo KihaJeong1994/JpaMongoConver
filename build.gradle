@@ -1,0 +1,56 @@
+plugins {
+	id 'org.springframework.boot' version '2.6.13'
+	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+	id 'java'
+}
+
+group = 'com.db2'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+ext {
+	set('db', "rdb")
+}
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+sourceSets {
+    main {
+        java {
+            // srcDir 'src'
+            // exclude 'main/java/com/db2/jpamongo/person/PersonEntity.java'
+			// if(!db.equals('rdb')){
+			// 	// exclude '**/*Entity.java'
+			// 	exclude '**/rdb/**'
+			// }else{
+			// 	// exclude '**/*Document.java'
+			// 	exclude '**/mongo/**'
+			// }
+       }
+   }
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	compileOnly 'org.projectlombok:lombok'
+	// if(db.equals('rdb')){
+		implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+		runtimeOnly 'org.postgresql:postgresql'
+	// }else{
+		implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
+	// }
+	annotationProcessor 'org.projectlombok:lombok'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}

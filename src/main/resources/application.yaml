@@ -1,0 +1,47 @@
+config:
+  db: mongo
+  spring:
+    data:
+      mongodb:
+        repositories:
+          type: 
+            mongo: AUTO
+      jpa :
+        repositories:
+          enabled: 
+            rdb: true
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: ktds
+    password: postgres
+  data:
+    mongodb:
+    #   uri: mongodb://43.200.39.6:27371/APIGW
+      host: localhost
+      port: 27017
+      database: MONGO
+    #   username: act_user
+    #   password: sksmsahffk1!
+      autoIndexCreation: true
+      repositories:
+        type: ${config.spring.data.mongodb.repositories.type.${config.db}:NONE}
+    jpa :
+      repositories:
+        enabled: ${config.spring.data.jpa.repositories.enabled.${config.db}:false}
+  jpa:
+    generate-ddl: false
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        default_batch_fetch_size: 100
+    open-in-view: false
+    hibernate:
+      naming:
+        implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
+      ddl-auto: create
+  
+    
